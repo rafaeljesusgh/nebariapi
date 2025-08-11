@@ -1,0 +1,50 @@
+using Microsoft.EntityFrameworkCore;
+using NebariApi.infrastructure;
+using NebariApi.Models;
+using NebariApi.Models;
+
+namespace MyApi.Services;
+
+public class treeService : ITreeService
+{
+    private readonly AppDbContext _db;
+
+    public treeService(AppDbContext db)
+    {
+        _db = db;
+    }
+
+    public async Task<IEnumerable<Tree>> GetAllAsync() =>
+        await _db.trees.ToListAsync();
+
+    public async Task<Tree?> GetByIdAsync(int id) =>
+        await _db.trees.FindAsync(id);
+
+    public async Task<Tree> CreateAsync(Tree tree)
+    {
+        _db.trees.Add(tree);
+        await _db.SaveChangesAsync();
+        return tree;
+    }
+
+    public async Task<bool> UpdateAsync(int id, Tree tree)
+    {
+        var existing = await _db.trees.FindAsync(id);
+        if (existing is null) return false;
+
+        existing.Name = tree.Name;
+
+        await _db.SaveChangesAsync();
+        return true;
+    }
+
+    public async Task<bool> DeleteAsync(int id)
+    {
+        var tree = await _db.trees.FindAsync(id);
+        if (tree is null) return false;
+
+        _db.trees.Remove(tree);
+        await _db.SaveChangesAsync();
+        return true;
+    }
+}
