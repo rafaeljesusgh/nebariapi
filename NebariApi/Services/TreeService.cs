@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using NebariApi.infrastructure;
+using NebariApi.Infrastructure;
 using NebariApi.Models;
 using NebariApi.Models;
 
@@ -15,21 +15,21 @@ public class treeService : ITreeService
     }
 
     public async Task<IEnumerable<Tree>> GetAllAsync() =>
-        await _db.trees.ToListAsync();
+        await _db.Tress.ToListAsync();
 
     public async Task<Tree?> GetByIdAsync(int id) =>
-        await _db.trees.FindAsync(id);
+        await _db.Tress.FindAsync(id);
 
     public async Task<Tree> CreateAsync(Tree tree)
     {
-        _db.trees.Add(tree);
+        _db.Tress.Add(tree);
         await _db.SaveChangesAsync();
         return tree;
     }
 
     public async Task<bool> UpdateAsync(int id, Tree tree)
     {
-        var existing = await _db.trees.FindAsync(id);
+        var existing = await _db.Tress.FindAsync(id);
         if (existing is null) return false;
 
         existing.Name = tree.Name;
@@ -40,10 +40,10 @@ public class treeService : ITreeService
 
     public async Task<bool> DeleteAsync(int id)
     {
-        var tree = await _db.trees.FindAsync(id);
+        var tree = await _db.Tress.FindAsync(id);
         if (tree is null) return false;
 
-        _db.trees.Remove(tree);
+        _db.Tress.Remove(tree);
         await _db.SaveChangesAsync();
         return true;
     }
