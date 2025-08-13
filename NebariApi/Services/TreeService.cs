@@ -1,15 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using NebariApi.Infrastructure;
 using NebariApi.Models;
-using NebariApi.Models;
 
-namespace MyApi.Services;
+namespace NebariApi.Services;
 
-public class treeService : ITreeService
+public class TreeService : ITreeService
 {
     private readonly AppDbContext _db;
 
-    public treeService(AppDbContext db)
+    public TreeService(AppDbContext db)
     {
         _db = db;
     }
